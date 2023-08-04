@@ -8,6 +8,7 @@ let urlPaths = [];
 let reporterName = "";
 
 const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
+const sleepShort = (ms = 1000) => new Promise((r) => setTimeout(r, ms));
 
 async function welcome() {
   const welcomeMessage = console.log(
@@ -15,6 +16,15 @@ async function welcome() {
   );
 
   await sleep();
+}
+
+async function installPa11y() {
+  console.log(chalk.blue("Installing pa11y-ci..."));
+  child.exec("npm install -g pa11y pa11y-ci", () => {
+    console.log(chalk.green("pa11y-ci installed!"));
+  });
+
+  await sleepShort();
 }
 
 async function reporter() {
@@ -107,5 +117,6 @@ function successMessage() {
 
 // Run function with top-level await
 await welcome();
+await installPa11y();
 await url();
 await addURL();
